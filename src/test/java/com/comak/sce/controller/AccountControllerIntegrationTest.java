@@ -15,16 +15,19 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.math.BigDecimal;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(AccountController.class)
 class AccountControllerIntegrationTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
 
+    @MockBean AccountService accountService;
+
     private static final String URL = "/api/account";
 
+
     @Test
-    public void testCreateAccountWithoutFirstNameShouldReturn400BadRequest() throws Exception {
+    void testCreateAccountWithoutFirstNameShouldReturn400BadRequest() throws Exception {
 
         String requestBody = objectMapper.writeValueAsString(
             AccountDto.builder()
